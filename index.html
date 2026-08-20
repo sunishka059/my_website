@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+<title>A Little Surprise For Aradhna 🎁</title>
+
+<!-- Google Fonts: Baloo 2 for playful headings, Quicksand for body text -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ============ AMBIENT BACKGROUND LAYERS ============ -->
+  <!-- Floating hearts/stars — purely decorative, generated + animated in JS -->
+  <div id="floaties" aria-hidden="true"></div>
+  <!-- Confetti canvas, only drawn on when triggered -->
+  <canvas id="confetti-canvas" aria-hidden="true"></canvas>
+
+  <!-- ============ TOP CONTROLS ============ -->
+  <div id="top-bar">
+    <div id="progress-track" aria-hidden="true">
+      <span class="bead" data-bead="1">1</span>
+      <span class="bead" data-bead="2">2</span>
+      <span class="bead" data-bead="3">3</span>
+      <span class="bead" data-bead="4">4</span>
+      <span class="bead" data-bead="5">🎁</span>
+    </div>
+
+    <button id="music-toggle" aria-label="Toggle background music">
+      <span id="music-icon">🔈</span>
+    </button>
+  </div>
+
+  <!-- Background music. Drop an mp3 named background-music.mp3 into /audio -->
+  <audio id="bgm" loop preload="none">
+    <source src="C:\Users\user\Documents\birthday\audio.mp3" type="audio/mpeg">
+  </audio>
+
+  <!--  ============ LOADING SCREEN ============ -->
+  <section id="loading-screen" class="screen active">
+    <div class="loader-heart">💗</div>
+    <p class="loader-text">wrapping something up<span class="dots"><span>.</span><span>.</span><span>.</span></span></p>
+  </section>
+ 
+  <!-- ============ LANDING ============ -->
+  <section id="landing" class="screen">
+    <div class="card landing-card">
+      <p class="eyebrow">this one's for you</p>
+      <h1 class="typewrite" data-text="Hey You 👀">Hey You 👀</h1>
+      <p class="sub">I made something for you... but there's a tiny catch.</p>
+      <button class="btn btn-primary" id="start-btn">Start the Surprise 🎁</button>
+    </div>
+  </section>
+
+  <!-- ============ STAGE 1 — THE HOOK ============ -->
+  <section id="stage1" class="screen">
+    <div class="card">
+      <p class="stage-tag">stage one</p>
+      <h2>Are you ready for a little birthday adventure? 👀</h2>
+      <div class="btn-row" id="stage1-buttons">
+        <button class="btn btn-primary" data-choice="yes">YESSS 🎉</button>
+        <button class="btn btn-ghost dodge" id="stage1-no">No 😐</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tiny transition line between stage 1 and 2 -->
+  <section id="stage1-transition" class="screen transition-screen">
+    <p class="transition-text typewrite" data-text="Okay... let's see how well you know us 👀">Okay... let's see how well you know us 👀</p>
+  </section>
+
+  <!-- ============ STAGE 2 — FRIENDSHIP ============ -->
+  <section id="stage2" class="screen">
+    <div class="card">
+      <p class="stage-tag">stage two · friendship check</p>
+      <h2>Do you agree that our friendship is at least 73% chaos?</h2>
+      <div class="btn-row" id="stage2-buttons">
+        <button class="btn btn-primary" data-choice="yes">Obviously 😂</button>
+        <button class="btn btn-ghost dodge" id="stage2-no">Absolutely not 🙄</button>
+      </div>
+
+      <div class="reveal-block" id="stage2-reveal" hidden>
+        <p class="reveal-line">Exactly. The other 27% is somehow even more chaotic.</p>
+        <div class="photo-frame">
+          <img src="C:\Users\user\Documents\birthday\photo1.jpeg" alt="A favourite photo of us" data-fallback-label="PHOTO_1">
+        </div>
+        <p class="photo-caption" contenteditable="true">caption goes here — tap to edit, or replace in the code</p>
+        <button class="btn btn-primary btn-small" id="stage2-continue">Keep going →</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ STAGE 3 — SHARED MEMORY ============ -->
+  <section id="stage3" class="screen">
+    <div class="card">
+      <p class="stage-tag">stage three · a memory</p>
+      <h2>Remember that one moment we'll probably never stop talking about?</h2>
+      <div class="btn-row" id="stage3-buttons">
+        <button class="btn btn-primary" data-choice="yes">How could I forget? 🥹</button>
+        <button class="btn btn-ghost dodge" id="stage3-no">My memory has left the chat 💀</button>
+      </div>
+
+      <div class="reveal-block memory-block" id="memory-1" hidden>
+        <div class="photo-frame large">
+          <img src="C:\Users\user\Documents\birthday\photo2.jpg" alt="A shared memory" data-fallback-label="PHOTO_2">
+        </div>
+        <p class="memory-meta" contenteditable="true">📍 Somewhere, sometime </p>
+        <p class="memory-text" contenteditable="true">This is the part where you tell the story. Keep it short, keep it real, keep it private so no one can hear🤐.</p>
+        <button class="btn btn-primary btn-small" id="more-memory-btn">One more memory →</button>
+      </div>
+
+      <div class="reveal-block memory-block" id="memory-2" hidden>
+        <div class="photo-frame large">
+          <img src="C:\Users\user\Documents\birthday\photo3.jpg" alt="Another shared memory" data-fallback-label="PHOTO_3">
+        </div>
+        <p class="memory-meta" contenteditable="true">📍 Everyday place, another day </p>
+        <p class="memory-text" contenteditable="true">And this is the place where we laugh, talk, and make lots of memories</p>
+        <button class="btn btn-primary btn-small" id="stage3-continue">Keep going →</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ STAGE 4 — FINAL REVEAL BUILD-UP ============ -->
+  <section id="stage4" class="screen">
+    <div class="card">
+      <p class="stage-tag">final stage</p>
+      <p class="build-line typewrite" data-text="Okay... you've made it this far.">Okay... you've made it this far.</p>
+      <p class="build-line build-line-2 typewrite" data-text="But there's one last question...">But there's one last question...</p>
+      <h2 class="build-question">Do you want to see what I actually made this whole thing for?</h2>
+      <div class="btn-row" id="stage4-buttons">
+        <button class="btn btn-primary" data-choice="yes">SHOW ME 👀</button>
+        <button class="btn btn-ghost dodge" id="stage4-no">I'm scared 😭</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ DRAMATIC COUNTDOWN OVERLAY ============ -->
+  <div id="countdown-overlay">
+    <div id="countdown-glow"></div>
+    <div id="countdown-number">3</div>
+  </div>
+
+  <!-- ============ FINAL BIRTHDAY REVEAL ============ -->
+  <section id="final-reveal" class="screen">
+    <div class="final-inner">
+      <h1 class="final-heading">HAPPY BIRTHDAY DARLING!!! 🎂❤️</h1>
+      <p class="final-paragraph" id="final-message" contenteditable="true">KUTTI, you're genuinely one of the most special people in my life. Thank you for all the laughs, stupid conversations, unforgettable memories, and for simply being you.Happy birthday! May your social battery last longer than your phone battery today.Growing older is mandatory, but growing up is totally optional.</p>
+
+      <h3 class="timeline-heading">Our Little Timeline 🫶</h3>
+      <div class="timeline">
+        <div class="timeline-card">
+          <p class="timeline-label">The Beginning</p>
+          <div class="photo-frame">
+            <img src="C:\Users\user\Documents\birthday\photo4.jpeg" alt="We laughed right down to our last goodbye." data-fallback-label="PHOTO_3">
+          </div>
+          <p class="timeline-text" contenteditable="true">We laughed right down to our last goodbye.</p>
+        </div>
+        <div class="timeline-card">
+          <p class="timeline-label">Your beautiful smile</p>
+          <div class="photo-frame">
+            <img src="C:\Users\user\Documents\birthday\photo5.jpeg" alt="That smile belongs to a special text." data-fallback-label="PHOTO_4">
+          </div>
+          <p class="timeline-text" contenteditable="true">That smile belongs to a special text.</p>
+        </div>
+        <div class="timeline-card">
+          <p class="timeline-label">The busiest person</p>
+          <div class="photo-frame">
+            <img src="C:\Users\user\Documents\birthday\photo6.jpg" alt="Do not disturb: she is deep in a text." data-fallback-label="PHOTO_5">
+          </div>
+          <p class="timeline-text" contenteditable="true">Do not disturb: she is deep in a text.</p>
+        </div>
+      </div>
+
+      <div class="handwritten-card">
+        <p class="handwritten-line">Here's to more memories, more inside jokes, more chaos, and many more birthdays together. ❤️</p>
+        <p class="handwritten-signoff">Happy Birthday, ARADHNA. You deserve the absolute best. 🫶</p>
+      </div>
+
+      <button class="btn btn-primary" id="replay-btn">Replay the Surprise 🔄</button>
+    </div>
+  </section>
+
+  <footer id="site-footer">Made with ❤️ for BEAUTIFUL</footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
